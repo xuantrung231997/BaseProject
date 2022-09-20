@@ -1,0 +1,4 @@
+include ':features:Demo'
+include ':libraries:core'
+include ':app'
+rootProject.name = "BaseProject"

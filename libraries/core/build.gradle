@@ -1,0 +1,81 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdk versions.compileSdk
+
+    defaultConfig {
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures{
+        dataBinding = true
+        // for view binding :
+        // viewBinding = true
+    }
+    compileOptions {
+        sourceCompatibility = versions.java
+        targetCompatibility = versions.java
+    }
+    kotlinOptions {
+        jvmTarget = versions.java.toString()
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation libraries.hilt
+    kapt libraries.hiltSupport
+    //implementation libraries.hiltViewModel
+    //kapt libraries.hiltCompiler
+
+    implementation libraries.kotlin
+    implementation libraries.fragment
+
+    //view
+    implementation libraries.material
+    implementation libraries.constraintlayout
+
+    //navigation
+    implementation libraries.navigation
+    implementation libraries.navigationUi
+
+//    implementation libraries.coroutine
+
+    //network
+    implementation libraries.retrofit
+    implementation libraries.gson
+    implementation libraries.interceptor
+
+    //logger
+    implementation libraries.timber
+
+    implementation libraries.viewmodel
+//    implementation libraries.lifecycleExt
+    kapt libraries.liveData
+
+    implementation libraries.dataStore
+
+    implementation libraries.glide
+    kapt libraries.glideCompiler
+
+
+}

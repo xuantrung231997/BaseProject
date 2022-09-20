@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    setting-->
+    <color name="color_title_setting">#999999</color>
+    <color name="color_line_divide">#9CC8C7CC</color>
+    <color name="color_content_setting">#AAAAAA</color>
+    <color name="color_title_login">#DC1515</color>
+    <color name="color_green">#8CC152</color>
+</resources>

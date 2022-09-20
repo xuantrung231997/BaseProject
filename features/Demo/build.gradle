@@ -1,0 +1,75 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdk versions.compileSdk
+
+    defaultConfig {
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures{
+        dataBinding = true
+        // for view binding :
+        // viewBinding = true
+    }
+
+    compileOptions {
+        sourceCompatibility = versions.java
+        targetCompatibility = versions.java
+    }
+
+    kotlinOptions {
+        jvmTarget = versions.java.toString()
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':libraries:core')
+
+    //appcompat
+    implementation libraries.appcompat
+    implementation libraries.fragment
+
+    implementation libraries.hilt
+    kapt libraries.hiltSupport
+    //implementation libraries.hiltViewModel
+    //kapt libraries.hiltCompiler
+
+    implementation libraries.kotlin
+
+    //    //ViewModel
+    implementation libraries.viewmodel
+//    implementation libraries.lifecycleExt
+    kapt libraries.liveData
+
+    //view
+    implementation libraries.material
+    implementation libraries.constraintlayout
+    implementation libraries.timber
+
+    // Loading Image
+    implementation libraries.glide
+    kapt libraries.glideCompiler
+    // Network
+    implementation libraries.retrofit
+    implementation libraries.gson
+    implementation libraries.interceptor
+}
