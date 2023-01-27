@@ -1,6 +1,6 @@
 # BaseProject
 
-Project structure (project use MVVM Architecture with multi-module build):
+Project Structure (project use MVVM Architecture with multi-module build):
 
     - libraries : code base
     - feature   : used for common features that can be inherited in other projects
