@@ -50,7 +50,7 @@ class HomePageAdapter(
 
             R.layout.item_song_layout -> {
                 numberSong++
-                Timber.tag("ahihi").d(" ahehe  $numberSong")
+//                Timber.tag("trungpx").d(" ahehe  $numberSong")
                 HomeSongHolder(
                     LayoutInflater.from(parent.context).inflate(
                         R.layout.item_song_layout,

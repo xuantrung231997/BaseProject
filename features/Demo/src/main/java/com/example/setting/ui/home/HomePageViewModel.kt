@@ -19,8 +19,8 @@ class HomePageViewModel @Inject constructor(
     val listHomePage = MutableStateFlow<List<HomePageItem>>(listOf())
 
     init {
-//        getListSong()
-        useCase3()
+        getListSong()
+//        useCase3()
     }
 
     private fun getListSong() {

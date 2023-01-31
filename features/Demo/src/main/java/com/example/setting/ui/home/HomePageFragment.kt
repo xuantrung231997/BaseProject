@@ -2,12 +2,10 @@ package com.example.setting.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.core.adapter.OnItemClickListener
 import com.example.core.base.BaseFragment
+import com.example.core.utils.collectFlowOnView
 import com.example.core.utils.prefetcher.bindToLifecycle
 import com.example.core.utils.prefetcher.setupWithPrefetchViewPool
 import com.example.setting.R
@@ -15,7 +13,6 @@ import com.example.setting.adapter.HomePageAdapter
 import com.example.setting.adapter.HomeSlideViewHolder
 import com.example.setting.databinding.FragmentHomePageBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomePageFragment :
@@ -73,14 +70,9 @@ class HomePageFragment :
     override fun bindingStateView() {
         super.bindingStateView()
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.listHomePage.collect {
-                    adapterHomePage?.submitList(it)
-                }
-            }
+        viewModel.listHomePage.collectFlowOnView(viewLifecycleOwner) {
+            adapterHomePage?.submitList(it)
         }
-
     }
 
     override fun onDestroyView() {

@@ -47,9 +47,9 @@ class MainActivity : BaseActivityNotRequireViewModel<ActivityMainBinding>() {
         networkConnectionManager.isNetworkConnectedFlow
             .onEach {
                 if (it) {
-                    Log.d("ahihi", "onCreate: Network connected")
+                    Log.d("trungpx", "onCreate: Network connected")
                 } else {
-                    Log.d("ahihi", "onCreate: Network disconnected")
+                    Log.d("trungpx", "onCreate: Network disconnected")
                 }
             }
             .launchIn(lifecycleScope)
