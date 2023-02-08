@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.TextUtils
 import com.example.core.network.ApiInterface
 import com.example.core.network.AuthApiInterface
+import com.example.core.network.MovieDBApiInterface
 import com.example.core.network.NetworkInterceptor
 import com.example.core.pref.RxPreferences
 import com.example.core.utils.Constants
@@ -38,6 +39,19 @@ class ApiModule {
     fun provideGson(): Gson {
         return GsonBuilder().setLenient().create()
     }
+
+    @Provides
+    @Singleton
+    fun provideMovieDBApiInterface(gson: Gson, client: OkHttpClient)
+            : MovieDBApiInterface {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.ApiComponents.URL_MOVIEDB)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+        return retrofit.create(MovieDBApiInterface::class.java)
+    }
+
 
     @Provides
     @Singleton

@@ -8,4 +8,6 @@
 
     <include app:graph="@navigation/tab_favorite_navigation" />
 
+    <include app:graph="@navigation/tab_movie_navigation" />
+
 </navigation>

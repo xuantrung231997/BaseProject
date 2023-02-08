@@ -19,7 +19,7 @@ abstract class BaseViewModel : ViewModel() {
 
     fun handleError(
         throwable: Throwable,
-        callBack: ((result: ErrorResponse) -> Unit?)?
+        callBack: ((result: ErrorResponse) -> Unit?)? = null
     ) {
         if (throwable is ConnectException) {
             messageError.postValue(throwable.message)

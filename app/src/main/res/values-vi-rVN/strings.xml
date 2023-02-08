@@ -2,6 +2,7 @@
 <resources>
     <string name="home">Trang chu</string>
     <string name="favorite">Yeu thich</string>
+    <string name="movie">Phim</string>
     <string name="splash">Bắn tung tóe</string>
 
 </resources>

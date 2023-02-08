@@ -2,7 +2,7 @@ ext {
     versions = [
             // For project configuration
             java            : JavaVersion.VERSION_1_8,
-            minSdk          : 21,
+            minSdk          : 24,
             compileSdk      : 31,
             targetSdk       : 31,
             versionCode     : 1,
@@ -15,6 +15,7 @@ ext {
             kotlin          : '1.6.20-RC',
             material        : '1.5.0',
             constraintlayout: '2.1.3',
+            swiperefreshlayout    : '1.1.0',
             navigation      : '2.5.0-alpha03',
             retrofit        : '2.9.0',
             hilt            : '2.41',
@@ -36,8 +37,17 @@ ext {
 
             //test
             junit           : "4.13",
-            mockito         : "3.1.0"
+            mockito         : "3.1.0",
 
+            //room
+            room            : '2.3.0',
+
+            // Shimmer
+            shimmer         : '0.5.0',
+
+            // sdp, ssp
+            sdp             : '1.0.6',
+            ssp             : '1.0.6',
     ]
     libraries = [
             androidGradle   : "com.android.tools.build:gradle:7.1.3",
@@ -49,6 +59,7 @@ ext {
             //design
             material        : "com.google.android.material:material:${versions.material}",
             constraintlayout: "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
+            swiperefreshlayout: "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swiperefreshlayout}",
 
             //navigation
             navigation      : "androidx.navigation:navigation-fragment-ktx:${versions.navigation}",
@@ -98,5 +109,17 @@ ext {
             junit           : "junit:junit:${versions.junit}",
             mockito         : "org.mockito:mockito-core:${versions.mockito}",
 
+            // Room
+            roomRuntime     : "androidx.room:room-runtime:${versions.room}",
+            roomCompiler    : "androidx.room:room-compiler:${versions.room}",
+            // Room (optional dependency) - Kotlin Extensions and Coroutines support for Room
+            room            : "androidx.room:room-ktx:${versions.room}",
+
+            // Shimmer for Android
+            shimmer         : "com.facebook.shimmer:shimmer:${versions.shimmer}",
+
+            // ssp, sdp
+            sdp             : "com.intuit.sdp:sdp-android:${versions.sdp}",
+            ssp             : "com.intuit.ssp:ssp-android:${versions.ssp}"
     ]
 }

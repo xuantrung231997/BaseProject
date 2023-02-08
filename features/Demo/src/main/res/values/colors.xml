@@ -6,4 +6,54 @@
     <color name="color_content_setting">#AAAAAA</color>
     <color name="color_title_login">#DC1515</color>
     <color name="color_green">#8CC152</color>
+    <color name="white_background">#F5F6FA</color>
+
+    <color name="transparent">#00FFFFFF</color>
+    <color name="transparent_10">#1AFFFFFF</color>
+    <color name="transparent_20">#33FFFFFF</color>
+    <color name="transparent_60">#99FFFFFF</color>
+    <color name="transparent_80">#CCFFFFFF</color>
+    <color name="transparent_90">#E6FFFFFF</color>
+
+    <color name="transparent_black">#00000000</color>
+    <color name="transparent_black_10">#1A000000</color>
+    <color name="transparent_black_20">#33000000</color>
+    <color name="transparent_black_40">#66000000</color>
+    <color name="transparent_black_60">#99000000</color>
+    <color name="transparent_black_70">#B3000000</color>
+
+    <color name="black">#000000</color>
+
+    <color name="grey_900">#202021</color>
+    <color name="grey_850">#374B56</color>
+    <color name="grey_800">#424242</color>
+    <color name="grey_750">#4F4F4F</color>
+    <color name="grey_700">#616163</color>
+    <color name="grey_600">#757575</color>
+    <color name="grey_620">#777777</color>
+    <color name="grey_650">#878788</color>
+    <color name="grey_500">#9E9E9E</color>
+    <color name="grey_400">#BDBDBD</color>
+    <color name="grey_360">#C6C9CA</color>
+    <color name="grey_300">#e7e7e7</color>
+    <color name="grey_350">#e8e8e8</color>
+    <color name="grey_250">#edeef3</color>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_100">#F5F5F5</color>
+    <color name="grey_60">#f9f9f9</color>
+    <color name="grey_50">#FAFAFA</color>
+
+    <color name="red_50">#FFEBEE</color>
+    <color name="red_100">#FFCDD2</color>
+    <color name="red_200">#EF9A9A</color>
+    <color name="red_300">#E57373</color>
+    <color name="red_400">#EF5350</color>
+    <color name="red_500">#F44336</color>
+    <color name="red_600">#E53935</color>
+    <color name="red_700">#d62135</color>
+    <color name="red_800">#C62828</color>
+    <color name="red_900">#B71C1C</color>
+
+    <color name="light_blue_50">#eafffe</color>
+    <color name="light_blue_100">#cff2fe</color>
 </resources>

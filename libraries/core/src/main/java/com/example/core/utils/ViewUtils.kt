@@ -8,6 +8,7 @@ import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.core.R
 import com.example.core.utils.Constants.DURATION_TIME_CLICKABLE
+import com.example.core.utils.DeviceUtil.Companion.getStatusBarHeight
 import com.example.core.utils.ViewUtils.lastClick
 
 object ViewUtils {
@@ -136,5 +138,16 @@ fun View.setOnSafeClickListener(duration: Long = DURATION_TIME_CLICKABLE, onClic
             onClick()
             lastClick = SystemClock.elapsedRealtime()
         }
+    }
+}
+
+/**
+ * Set a layout below status bar
+ */
+fun View.setLayoutBelowStatusBar() {
+    if (this.layoutParams is MarginLayoutParams) {
+        val layoutParams = this.layoutParams as MarginLayoutParams
+        layoutParams.setMargins(0, getStatusBarHeight(this.context), 0, 0)
+        this.requestLayout()
     }
 }
