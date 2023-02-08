@@ -5,6 +5,12 @@ object Constants {
     const val DEFAULT_TIMEOUT = 30
     const val DURATION_TIME_CLICKABLE = 500L
 
+    // define ui state
+    const val MODE_LOADING = 0
+    const val MODE_SUCCESS = 1
+    const val MODE_NO_DATA = 2
+    const val MODE_ERROR = 3
+
     object NetworkRequestCode {
         const val REQUEST_CODE_200 = 200    //normal
         const val REQUEST_CODE_400 = 400    //parameter error
@@ -16,6 +22,7 @@ object Constants {
 
     object ApiComponents {
         const val BASE_URL = "https://google.com"
+        const val URL_MOVIEDB = "https://api.themoviedb.org/3/movie/"
     }
 
 }

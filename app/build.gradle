@@ -59,6 +59,7 @@ dependencies {
     //view
     implementation libraries.material
     implementation libraries.constraintlayout
+    implementation libraries.swiperefreshlayout
 
     //navigation
     implementation libraries.navigation
@@ -84,4 +85,10 @@ dependencies {
     kapt libraries.glideCompiler
 
     debugImplementation libraries.leak
+
+    // Room
+    implementation libraries.roomRuntime
+    kapt libraries.roomCompiler
+    // Room (optional dependency) - Kotlin Extensions and Coroutines support for Room
+    implementation libraries.room
 }

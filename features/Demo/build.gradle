@@ -22,7 +22,7 @@ android {
         }
     }
 
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
         // for view binding :
         // viewBinding = true
@@ -63,6 +63,7 @@ dependencies {
     //view
     implementation libraries.material
     implementation libraries.constraintlayout
+    implementation libraries.swiperefreshlayout
     implementation libraries.timber
 
     // Loading Image
@@ -72,4 +73,7 @@ dependencies {
     implementation libraries.retrofit
     implementation libraries.gson
     implementation libraries.interceptor
+
+    // Shimmer for Android
+    implementation libraries.shimmer
 }

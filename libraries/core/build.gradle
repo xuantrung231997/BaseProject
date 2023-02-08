@@ -16,6 +16,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+        buildConfigField("String", "MOVIE_DB_ACCESS_KEY", "\"" + getMovieDBAccessKey() + "\"")
     }
 
     buildTypes {
@@ -53,6 +54,7 @@ dependencies {
     //view
     implementation libraries.material
     implementation libraries.constraintlayout
+    implementation libraries.swiperefreshlayout
 
     //navigation
     implementation libraries.navigation
@@ -77,5 +79,17 @@ dependencies {
     implementation libraries.glide
     kapt libraries.glideCompiler
 
+    // Room
+    implementation libraries.roomRuntime
+    kapt libraries.roomCompiler
+    // Room (optional dependency) - Kotlin Extensions and Coroutines support for Room
+    implementation libraries.room
 
+    // sdp, ssp
+    implementation libraries.sdp
+    implementation libraries.ssp
+}
+
+def getMovieDBAccessKey() {
+    return project.findProperty("moviedb_access_key")
 }

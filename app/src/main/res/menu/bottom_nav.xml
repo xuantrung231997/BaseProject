@@ -7,6 +7,12 @@
         android:title="@string/home" />
 
     <item
+        android:id="@+id/movie"
+        android:icon="@drawable/ic_birthday"
+        android:contentDescription="@string/movie"
+        android:title="@string/movie" />
+
+    <item
         android:id="@+id/favorite"
         android:icon="@drawable/ic_birthday"
         android:contentDescription="@string/favorite"

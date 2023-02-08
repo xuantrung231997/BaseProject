@@ -11,6 +11,7 @@ import com.example.core.base.BaseActivityNotRequireViewModel
 import com.example.core.pref.RxPreferences
 import com.example.core.utils.NetworkConnectionManager
 import com.example.core.utils.setLanguage
+import com.example.core.utils.statusBar.StatusBarCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
@@ -34,6 +35,8 @@ class MainActivity : BaseActivityNotRequireViewModel<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        StatusBarCompat.translucentStatusBar(this, true)
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host) as NavHostFragment
