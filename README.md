@@ -23,6 +23,7 @@ Project Technology:
     ...
     
 Plugins:
-#If you want to test project - please create API key from https://developers.themoviedb.org/3/movies and add your key in gradle.propeties file
+
+ #If you want to test project - please create API key from https://developers.themoviedb.org/3/movies and add your key in gradle.propeties file
 
     moviedb_access_key="PLACE YOUR KEY IN HERE" 
