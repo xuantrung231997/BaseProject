@@ -17,7 +17,7 @@ private const val DATABASE_NAME = "BaseProject"
 class DatabaseModule {
     @Singleton
     @Provides
-    fun provideMessageDatabase(
+    fun provideMovieDatabase(
         @ApplicationContext app: Context
     ) = Room.databaseBuilder(
         app,
@@ -27,5 +27,5 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideMessageDao(db: MovieDatabase) = db.getMovieDao()
+    fun provideMovieDao(db: MovieDatabase) = db.getMovieDao()
 }
