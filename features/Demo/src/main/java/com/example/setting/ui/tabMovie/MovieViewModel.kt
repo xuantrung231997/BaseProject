@@ -33,13 +33,13 @@ class MovieViewModel @Inject constructor(
                 delay(2000)
             }.map {
                 repository.insertListMovie(it.results)
-                getMovieListToDatabase()
+                getMovieListFromDatabase()
             }.catch { e ->
                 _movies.value = Resource.Error(e)
             }.launchIn(viewModelScope)
     }
 
-    private fun getMovieListToDatabase() {
+    private fun getMovieListFromDatabase() {
         repository.getListMovie()
             .flowOn(Dispatchers.IO)
             .map {
