@@ -9,7 +9,7 @@ interface MovieDBApiInterface {
     @GET("now_playing")
     suspend fun getNowPlaying(
         @Query("language") lang: String = "en-US",
-        @Query("page") page: Int = 1,
+        @Query("page") page: Long,
         @Query("api_key") clientId: String = BuildConfig.MOVIE_DB_ACCESS_KEY
     ): MovieResult
 }

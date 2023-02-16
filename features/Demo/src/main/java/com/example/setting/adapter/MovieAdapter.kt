@@ -7,30 +7,60 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.model.network.movie.Movie
+import com.example.core.model.network.movie.Movie.Companion.LOADING_MOVIE_ID
+import com.example.setting.R
 import com.example.setting.databinding.ItemMovieBinding
+import com.example.setting.databinding.LayoutLoadMoreBinding
 
 class MovieAdapter constructor(
     context: Context,
-) : ListAdapter<Movie, MovieHolder>(MovieDiffUtil()) {
+) : ListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffUtil()) {
+
+    private var movies = mutableListOf<Movie>()
 
     private val layoutInflater by lazy {
         LayoutInflater.from(context)
     }
 
     override fun submitList(list: List<Movie>?) {
-        val result = list?.map { it.copy() }
-        super.submitList(result)
+        movies = (list?.map { it.copy() } ?: run { mutableListOf() }) as MutableList<Movie>
+        super.submitList(movies)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
-        return MovieHolder(ItemMovieBinding.inflate(layoutInflater, parent, false))
+    fun addLoadMoreMovies(insertMovies: List<Movie>) {
+        if (movies.isNotEmpty()) {
+            // always remove item loading if any
+            if (movies.last().id == LOADING_MOVIE_ID) {
+                movies.removeLast()
+            }
+            val index = movies.size
+            movies.addAll(insertMovies)
+            notifyItemRangeInserted(index, insertMovies.size)
+        }
     }
 
-    override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-        holder.bindData(getItem(position))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == R.layout.item_movie) {
+            MovieHolder(ItemMovieBinding.inflate(layoutInflater, parent, false))
+        } else {
+            LoadingViewHolder(LayoutLoadMoreBinding.inflate(layoutInflater, parent, false))
+        }
     }
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is MovieHolder) holder.bindData(getItem(position))
+    }
+
+    override fun getItemId(position: Int): Long {
+        return getItem(position).id.hashCode().toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (getItem(position).id == LOADING_MOVIE_ID) R.layout.layout_load_more else R.layout.item_movie
+    }
 }
+
+class LoadingViewHolder(val binding: LayoutLoadMoreBinding) : RecyclerView.ViewHolder(binding.root)
 
 class MovieHolder(
     val binding: ItemMovieBinding,
