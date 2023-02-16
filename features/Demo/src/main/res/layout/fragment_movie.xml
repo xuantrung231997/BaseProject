@@ -32,7 +32,7 @@
             app:layout_constraintTop_toBottomOf="@id/status_bar_space">
 
             <ViewFlipper
-                displayChild="@{viewModel.movies}"
+                displayChild="@{viewModel.originMovies}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 

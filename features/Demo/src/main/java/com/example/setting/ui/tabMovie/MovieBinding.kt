@@ -6,8 +6,8 @@ import com.bumptech.glide.Glide
 import com.example.setting.R
 
 @BindingAdapter("loadImageMovie")
-fun ImageView.loadImageMovie(url: String) {
-    val urlConvert = "https://image.tmdb.org/t/p/w300${url}"
+fun ImageView.loadImageMovie(url: String?) {
+    val urlConvert = "https://image.tmdb.org/t/p/w300${url ?: ""}"
     Glide.with(this)
         .load(urlConvert)
         .override(this.width, this.height)

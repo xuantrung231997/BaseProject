@@ -77,3 +77,4 @@ dependencies {
     // Shimmer for Android
     implementation libraries.shimmer
 }
+

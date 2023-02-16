@@ -20,6 +20,11 @@ object Constants {
         const val REQUEST_CODE_500 = 500    //system error
     }
 
+    object LoadMoreThreshold {
+        const val DEFAULT = 1
+        const val MOVIE = 5
+    }
+
     object ApiComponents {
         const val BASE_URL = "https://google.com"
         const val URL_MOVIEDB = "https://api.themoviedb.org/3/movie/"

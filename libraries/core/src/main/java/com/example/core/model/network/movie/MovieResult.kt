@@ -9,7 +9,7 @@ const val TABLE_MOVIE = "TABLE_MOVIE"
 data class MovieResult(
     @field:SerializedName("dates") var dates: Dates? = null,
     @field:SerializedName("page") var page: Long = 0,
-    @field:SerializedName("results") var results: List<Movie> = emptyList(),
+    @field:SerializedName("results") var results: MutableList<Movie> = mutableListOf(),
     @field:SerializedName("total_pages") var totalPages: Long = 0,
     @field:SerializedName("total_results") var totalResults: Long = 0,
 )
@@ -34,7 +34,27 @@ data class Movie(
     @field:SerializedName("video") val video: Boolean,
     @field:SerializedName("vote_average") val voteAverage: Double,
     @field:SerializedName("vote_count") val voteCount: Long
-)
+) {
+    constructor(id: Long) : this(
+        adult = false,
+        backdropPath = "",
+        id,
+        originalLanguage = OriginalLanguage.En,
+        originalTitle = "",
+        overview = "",
+        popularity = 0.0,
+        posterPath = "",
+        releaseDate = "",
+        title = "",
+        video = false,
+        voteAverage = 0.0,
+        voteCount = 0L
+    )
+
+    companion object {
+        const val LOADING_MOVIE_ID = 0L
+    }
+}
 
 enum class OriginalLanguage {
     En,

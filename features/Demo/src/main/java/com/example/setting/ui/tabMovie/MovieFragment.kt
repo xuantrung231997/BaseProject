@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import com.example.core.base.BaseFragment
 import com.example.core.network.Resource
+import com.example.core.utils.Constants
+import com.example.core.utils.initLoadMore
 import com.example.core.utils.setLayoutBelowStatusBar
 import com.example.setting.R
 import com.example.setting.adapter.MovieAdapter
@@ -30,6 +32,10 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>(R.layou
                 itemAnimator = null
                 hasFixedSize()
                 adapter = movieAdapter
+
+                initLoadMore(Constants.LoadMoreThreshold.MOVIE) {
+                    movieViewModel.loadMoreMovieIfNeed()
+                }
             }
 
             viewModel = movieViewModel
@@ -40,10 +46,27 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>(R.layou
     override fun bindingStateView() {
         super.bindingStateView()
 
-        movieViewModel.movies.observe(viewLifecycleOwner) { result ->
-            if (result is Resource.Success)
-                movieAdapter.submitList(result.data)
+        movieViewModel.apply {
+            originMovies.observe(viewLifecycleOwner) { result ->
+                if (result is Resource.Success && movieViewModel.isNotifyOriginMovies)
+                    movieAdapter.submitList(result.data.results)
+            }
+
+            loadMoreMovies.observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is Resource.Loading -> movieAdapter.addLoadingItem()
+                    is Resource.Success -> {
+                        movieAdapter.apply {
+                            removeLoadingItem()
+                            addLoadMoreMovies(result.data)
+                        }
+                    }
+                    else -> return@observe
+                }
+
+            }
         }
+
     }
 
     override fun setOnClick() {

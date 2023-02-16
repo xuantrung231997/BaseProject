@@ -17,12 +17,14 @@ import android.widget.Toast
 import androidx.annotation.AnimRes
 import androidx.annotation.ColorRes
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.core.R
 import com.example.core.utils.Constants.DURATION_TIME_CLICKABLE
 import com.example.core.utils.DeviceUtil.Companion.getStatusBarHeight
 import com.example.core.utils.ViewUtils.lastClick
+import timber.log.Timber
 
 object ViewUtils {
     //check double click
@@ -151,3 +153,27 @@ fun View.setLayoutBelowStatusBar() {
         this.requestLayout()
     }
 }
+
+fun RecyclerView.initLoadMore(
+    loadMoreThreshold: Int = Constants.LoadMoreThreshold.DEFAULT,
+    onRequestToLoadMoreData: (() -> Unit)? = null
+) {
+    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (dy <= 0) return
+
+            adapter?.let {
+                if (!(loadMoreThreshold >= 1 && loadMoreThreshold <= it.itemCount - 1)) return
+                try {
+                    if ((layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() >= it.itemCount - loadMoreThreshold) {
+                        onRequestToLoadMoreData?.invoke()
+                    }
+                } catch (e: Exception) {
+                    Timber.e(e)
+                }
+            }
+        }
+    })
+}
+
