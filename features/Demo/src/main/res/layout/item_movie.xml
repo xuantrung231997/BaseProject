@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="movie"
-            type="com.example.core.model.network.movie.Movie" />
+            name="itemMovie"
+            type="com.example.setting.model.ItemMovie" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -50,7 +50,7 @@
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{movie.title}"
+                        android:text="@{itemMovie.movie.title}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_18"
                         android:textStyle="bold"
@@ -63,7 +63,7 @@
                         android:layout_marginTop="8dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="@{movie.originalTitle}"
+                        android:text="@{itemMovie.movie.originalTitle}"
                         tools:text="Secondary message card layouts can vary to support the types of content they contain. The following elements are commonly found among that variety." />
                 </LinearLayout>
             </LinearLayout>
@@ -77,7 +77,7 @@
                 android:scaleType="centerCrop"
                 app:backgroundTint="@color/material_on_surface_emphasis_medium"
                 app:backgroundTintMode="add"
-                app:loadImageMovie="@{movie.posterPath}" />
+                app:loadImageMovie="@{itemMovie.movie.posterPath}" />
 
             <TextView
                 android:id="@+id/content"
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:maxLines="3"
-                android:text="@{movie.overview}"
+                android:text="@{itemMovie.movie.overview}"
                 tools:text="Lorem ipsum dolor sit amet, nec no nominavi scaevola. Per et sint sapientem, nobis perpetua salutandi mei te. Quo tamquam probatus reprehendunt in. Eos esse purto eruditi ea. Enim tation persius ut sea, eos ad consul populo.
 Ne eum solet altera. Cibo eligendi et est, electram theophrastus te vel eu." />
 

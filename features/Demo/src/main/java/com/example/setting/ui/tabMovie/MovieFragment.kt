@@ -8,6 +8,7 @@ import com.example.core.utils.Constants
 import com.example.core.utils.initLoadMore
 import com.example.core.utils.setLayoutBelowStatusBar
 import com.example.setting.R
+import com.example.setting.adapter.BannerMovieViewHolder
 import com.example.setting.adapter.MovieAdapter
 import com.example.setting.databinding.FragmentMovieBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,8 +49,9 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>(R.layou
 
         movieViewModel.apply {
             originMovies.observe(viewLifecycleOwner) { result ->
-                if (result is Resource.Success && movieViewModel.isNotifyOriginMovies)
-                    movieAdapter.submitList(result.data.results)
+                if (result is Resource.Success && movieViewModel.isNotifyOriginMovies) {
+                    movieAdapter.submitList(result.data)
+                }
             }
 
             loadMoreMovies.observe(viewLifecycleOwner) { result ->
@@ -77,4 +79,13 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>(R.layou
             movieViewModel.fetchMovieInfo()
         }
     }
+
+    override fun onDestroyView() {
+        val holder = binding.recyclerView.findViewHolderForAdapterPosition(0)
+        if (holder is BannerMovieViewHolder) {
+            holder.onViewRecycled()
+        }
+        super.onDestroyView()
+    }
+
 }

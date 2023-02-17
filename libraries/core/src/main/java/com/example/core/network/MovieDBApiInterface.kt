@@ -12,4 +12,9 @@ interface MovieDBApiInterface {
         @Query("page") page: Long,
         @Query("api_key") clientId: String = BuildConfig.MOVIE_DB_ACCESS_KEY
     ): MovieResult
+
+    @GET("popular")
+    suspend fun getPopular(
+        @Query("api_key") clientId: String = BuildConfig.MOVIE_DB_ACCESS_KEY
+    ): MovieResult
 }

@@ -19,6 +19,8 @@ class MovieRepository @Inject constructor(
     fun getMovieInfo(pageIndex: Long = DEFAULT_MOVIE_PAGE_INDEX) =
         flow { emit(movieDBApiInterface.getNowPlaying(page = pageIndex)) }.flowOn(Dispatchers.IO)
 
+    fun getPopular() = flow { emit(movieDBApiInterface.getPopular()) }.flowOn(Dispatchers.IO)
+
     fun getListMovie() = movieDao.getListMovie()
 
     suspend fun insertListMovie(movies: List<Movie>) = movieDao.insertListMovie(movies)

@@ -34,27 +34,7 @@ data class Movie(
     @field:SerializedName("video") val video: Boolean,
     @field:SerializedName("vote_average") val voteAverage: Double,
     @field:SerializedName("vote_count") val voteCount: Long
-) {
-    constructor(id: Long) : this(
-        adult = false,
-        backdropPath = "",
-        id,
-        originalLanguage = OriginalLanguage.En,
-        originalTitle = "",
-        overview = "",
-        popularity = 0.0,
-        posterPath = "",
-        releaseDate = "",
-        title = "",
-        video = false,
-        voteAverage = 0.0,
-        voteCount = 0L
-    )
-
-    companion object {
-        const val LOADING_MOVIE_ID = 0L
-    }
-}
+)
 
 enum class OriginalLanguage {
     En,
