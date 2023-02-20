@@ -76,15 +76,20 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>(R.layou
 
         binding.refreshLayout.setOnRefreshListener {
             binding.refreshLayout.isRefreshing = false
+            recycledBannerViewHolder()
             movieViewModel.fetchMovieInfo()
         }
     }
 
-    override fun onDestroyView() {
+    private fun recycledBannerViewHolder() {
         val holder = binding.recyclerView.findViewHolderForAdapterPosition(0)
         if (holder is BannerMovieViewHolder) {
             holder.onViewRecycled()
         }
+    }
+
+    override fun onDestroyView() {
+        recycledBannerViewHolder()
         super.onDestroyView()
     }
 
