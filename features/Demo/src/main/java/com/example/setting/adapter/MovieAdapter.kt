@@ -1,8 +1,6 @@
 package com.example.setting.adapter
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -16,6 +14,9 @@ import com.example.setting.model.BannerMovie
 import com.example.setting.model.ItemLoading
 import com.example.setting.model.ItemMovie
 import com.example.setting.model.MovieView
+import kotlinx.coroutines.*
+
+private const val TIME_AUTO_SCROLL_BANNER_MOVIE = 2000L
 
 class MovieAdapter constructor(
     context: Context,
@@ -103,44 +104,12 @@ class MovieHolder(val binding: ItemMovieBinding) : RecyclerView.ViewHolder(bindi
 
 class BannerMovieViewHolder(val binding: ItemHomeSlideLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private var currentPosition = 0
-
     private val adapter by lazy { BannerMovieAdapter() }
 
-    private var runnable: Runnable? = null
-
-    private var handler: Handler? = null
-
-    private fun getRunnable() = Runnable {
-        if (binding.viewPager.currentItem >= binding.viewPager.adapter!!.itemCount - 1) {
-            binding.viewPager.currentItem = 0
-        } else {
-            binding.viewPager.currentItem = binding.viewPager.currentItem + 1
-        }
-
-        handleLoop()
-    }
-
-    private fun stopLoop() {
-        runnable?.let { handler?.removeCallbacks(it) }
-    }
+    private val adapterScope = CoroutineScope(Dispatchers.Default)
 
     fun onViewRecycled() {
-        currentPosition = binding.viewPager.currentItem
-        stopLoop()
-        handler = null
-        runnable = null
-    }
-
-    private fun handleLoop() {
-        if (handler == null) {
-            handler = Handler(Looper.getMainLooper())
-        }
-        if (runnable == null) {
-            runnable = getRunnable()
-        }
-        stopLoop()
-        runnable?.let { handler?.postDelayed(it, 2000) }
+        adapterScope.coroutineContext.cancelChildren()
     }
 
     fun bindData(data: BannerMovie) {
@@ -151,9 +120,17 @@ class BannerMovieViewHolder(val binding: ItemHomeSlideLayoutBinding) : RecyclerV
             clipToPadding = false
         }
         adapter.submitList(data.populars)
-        binding.viewPager.setCurrentItem(currentPosition, false)
 
-        handleLoop()
+        adapterScope.launch {
+            while (isActive) {
+                delay(TIME_AUTO_SCROLL_BANNER_MOVIE)
+                var currentPosition = binding.viewPager.currentItem
+                if (currentPosition == adapter.itemCount - 1) currentPosition = -1
+                withContext(Dispatchers.Main) {
+                    binding.viewPager.setCurrentItem(currentPosition + 1, true)
+                }
+            }
+        }
     }
 
 }

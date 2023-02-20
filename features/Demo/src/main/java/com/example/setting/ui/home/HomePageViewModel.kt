@@ -19,8 +19,10 @@ class HomePageViewModel @Inject constructor(
     val listHomePage = MutableStateFlow<List<HomePageItem>>(listOf())
 
     init {
-        getListSong()
+//        getListSong()
 //        useCase3()
+        useCase2()
+//        useCase1()
     }
 
     private fun getListSong() {
@@ -41,7 +43,7 @@ class HomePageViewModel @Inject constructor(
 
     //cho n flow chay song song, khi nao tat ca cung xong thi update len view
     private fun useCase1() {
-        val flow1 = repository.delayFlow(1500)
+        val flow1 = repository.delayFlow(1000)
         val flow2 = repository.delayFlow(2000)
         val flow3 = repository.delayFlow(3000)
 
@@ -54,7 +56,7 @@ class HomePageViewModel @Inject constructor(
                 Timber.tag(TAG).d("onCompletion: ${it?.message}")
             }.onEach {
                 //on Result
-                Timber.tag(TAG).d("onEach: ")
+                Timber.tag(TAG).d("onEach: $it")
             }.catch {
                 messageError.value = it.message
                 Timber.tag(TAG).d("catch: ${it.message}")
@@ -63,7 +65,7 @@ class HomePageViewModel @Inject constructor(
 
     //cho n flow chay song song, cai nao xong truoc hien thi truoc, khi nao tat ca cung xong thi update len view
     private fun useCase2() {
-        val flow1 = repository.delayFlow(1500).map { Pair("Flow1", it) }
+        val flow1 = repository.delayFlow(1000).map { Pair("Flow1", it) }
         val flow2 = repository.delayFlow(2000).map { Pair("Flow2", it) }
         val flow3 = repository.delayFlow(3000).map { Pair("Flow3", it) }
 
@@ -75,7 +77,7 @@ class HomePageViewModel @Inject constructor(
                 Timber.tag(TAG).d("onCompletion: ${it?.message}")
             }.onEach {
                 //on Result
-                Timber.tag(TAG).d("onEach: %s", it.first)
+                Timber.tag(TAG).d("onEach: ${it.first} ${it.second}")
             }.catch {
                 messageError.value = it.message
                 Timber.tag(TAG).d("catch: ${it.message}")
