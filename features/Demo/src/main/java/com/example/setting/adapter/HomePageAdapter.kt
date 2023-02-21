@@ -21,9 +21,6 @@ import com.example.setting.databinding.ItemHomeSlideLayoutBinding
 import com.example.setting.databinding.ItemTitleHomeLayoutBinding
 import com.example.setting.model.*
 
-/**
- * Created by vietbh on 2022-03-17.
- */
 class HomePageAdapter(
     private val onItemClickListener: OnItemClickListener? = null
 ) : ListAdapter<HomePageItem, RecyclerView.ViewHolder>(HomePageDiffUtil()) {

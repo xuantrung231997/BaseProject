@@ -18,10 +18,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import java.lang.ref.WeakReference
 import kotlin.math.abs
 
-/**
- * After Lollipop use system method.
- * Created by qiu on 8/27/16.
- */
 internal object StatusBarCompatLollipop {
     /**
      * return statusBar's Height in pixels

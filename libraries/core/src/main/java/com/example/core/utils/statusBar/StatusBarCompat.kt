@@ -8,10 +8,6 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 
-/**
- * Utils for status bar
- * Created by qiu on 3/29/16.
- */
 object StatusBarCompat {
     //Get alpha color
     fun calculateStatusBarColor(color: Int, alpha: Int): Int {
