@@ -2,13 +2,14 @@ package com.example.setting.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.model.network.movie.Movie
 import com.example.setting.databinding.ItemBannerLayoutBinding
 
-class BannerMovieAdapter : ListAdapter<Movie, BannerMovieAdapter.BannerMovieHolder>(BannerMovieDiffUtil()) {
+class BannerMovieAdapter(originalList: List<Movie>) : RecyclerView.Adapter<BannerMovieAdapter.BannerMovieHolder>() {
+
+    private val newList: List<Movie> =
+        listOf(originalList.last()) + originalList + listOf(originalList.first())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         BannerMovieHolder(
@@ -20,7 +21,7 @@ class BannerMovieAdapter : ListAdapter<Movie, BannerMovieAdapter.BannerMovieHold
         )
 
     override fun onBindViewHolder(holder: BannerMovieHolder, position: Int) {
-        holder.bindData(getItem(position))
+        holder.bindData(newList[position])
     }
 
     class BannerMovieHolder(val binding: ItemBannerLayoutBinding) :
@@ -37,16 +38,10 @@ class BannerMovieAdapter : ListAdapter<Movie, BannerMovieAdapter.BannerMovieHold
         }
     }
 
+    override fun getItemCount(): Int {
+        return newList.size
+    }
 
 }
 
-class BannerMovieDiffUtil : DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-        return oldItem.id == newItem.id
-    }
-}
 

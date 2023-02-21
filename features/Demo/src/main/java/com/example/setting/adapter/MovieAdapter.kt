@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.example.setting.R
 import com.example.setting.databinding.ItemHomeSlideLayoutBinding
 import com.example.setting.databinding.ItemMovieBinding
@@ -104,32 +105,60 @@ class MovieHolder(val binding: ItemMovieBinding) : RecyclerView.ViewHolder(bindi
 
 class BannerMovieViewHolder(val binding: ItemHomeSlideLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private val adapter by lazy { BannerMovieAdapter() }
+    private lateinit var bannerMovieAdapter: BannerMovieAdapter
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
+    private var currentBannerMovie = 1
+
     fun onViewRecycled() {
+        currentBannerMovie = 1
         adapterScope.coroutineContext.cancelChildren()
     }
 
     fun bindData(data: BannerMovie) {
-        binding.viewPager.adapter = adapter
-        val recyclerView = binding.viewPager.getChildAt(0) as RecyclerView
-        recyclerView.apply {
-            setPadding(100, 0, 100, 0)
-            clipToPadding = false
+        bannerMovieAdapter = BannerMovieAdapter(data.populars)
+        binding.viewPager.apply {
+            adapter = bannerMovieAdapter
+            val recyclerView = this.getChildAt(0) as RecyclerView
+            recyclerView.apply {
+                setPadding(100, 0, 100, 0)
+                clipToPadding = false
+            }
+            // setting the current item of the infinite ViewPager to the actual first element
+            currentItem = currentBannerMovie
         }
-        adapter.submitList(data.populars)
+
+        // function for registering a callback to update the ViewPager
+        // and provide a smooth flow for infinite scroll
+        onInfinitePageChangeCallback(data.populars.size + 2)
 
         adapterScope.launch {
             while (isActive) {
                 delay(TIME_AUTO_SCROLL_BANNER_MOVIE)
                 var currentPosition = binding.viewPager.currentItem
-                if (currentPosition == adapter.itemCount - 1) currentPosition = -1
+                if (currentPosition == bannerMovieAdapter.itemCount - 1) currentPosition = -1
                 withContext(Dispatchers.Main) {
                     binding.viewPager.setCurrentItem(currentPosition + 1, true)
                 }
             }
+        }
+    }
+
+    private fun onInfinitePageChangeCallback(listSize: Int) {
+        binding.viewPager.apply {
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+
+                    if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                        when (currentItem) {
+                            listSize - 1 -> setCurrentItem(1, false)
+                            0 -> setCurrentItem(listSize - 2, false)
+                        }
+                    }
+                }
+            })
         }
     }
 
