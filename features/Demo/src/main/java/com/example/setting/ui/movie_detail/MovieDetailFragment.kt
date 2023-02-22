@@ -6,7 +6,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.core.base.BaseFragment
 import com.example.core.network.Resource
@@ -15,8 +14,6 @@ import com.example.setting.R
 import com.example.setting.adapter.ActorAdapter
 import com.example.setting.databinding.FragmentMovieDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -46,26 +43,10 @@ class MovieDetailFragment :
                 layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
                 adapter = actorAdapter
 
-                lifecycleScope.launch(Dispatchers.Main) {
-                    content.viewTreeObserver.addOnGlobalLayoutListener(object :
-                        ViewTreeObserver.OnGlobalLayoutListener {
-                        override fun onGlobalLayout() {
-                            val isEllipsized = (content.layout?.getEllipsisCount(content.lineCount - 1) ?: 0) > 0
-                            if (isEllipsized) {
-                                binding.readMore.visibility = VISIBLE
-                            }
-                            content.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                        }
-                    })
-                }
-
                 viewModel = movieDetailViewModel
                 executePendingBindings()
-
             }
-
         }
-
     }
 
     override fun bindingStateView() {
@@ -77,6 +58,7 @@ class MovieDetailFragment :
                     binding.apply {
                         movie = it.data
                         executePendingBindings()
+                        handleReadMoreState()
                     }
                 }
             }
@@ -97,4 +79,18 @@ class MovieDetailFragment :
         }
     }
 
+    private fun handleReadMoreState() {
+        binding.content.also {
+            it.viewTreeObserver.addOnGlobalLayoutListener(object :
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    val isEllipsized = (it.layout?.getEllipsisCount(it.lineCount - 1) ?: 0) > 0
+                    if (isEllipsized) {
+                        binding.readMore.visibility = VISIBLE
+                    }
+                    it.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
+        }
+    }
 }
