@@ -1,12 +1,12 @@
 package com.example.setting.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.example.core.model.network.movie.Movie
 import com.example.setting.R
 import com.example.setting.databinding.ItemHomeSlideLayoutBinding
 import com.example.setting.databinding.ItemMovieBinding
@@ -20,14 +20,11 @@ import kotlinx.coroutines.*
 private const val TIME_AUTO_SCROLL_BANNER_MOVIE = 2000L
 
 class MovieAdapter constructor(
-    context: Context,
+    private val myScope: CoroutineScope,
+    private val onItemClicked: (Movie) -> Unit
 ) : ListAdapter<MovieView, RecyclerView.ViewHolder>(MovieDiffUtil()) {
 
     private var movieViews = mutableListOf<MovieView>()
-
-    private val layoutInflater by lazy {
-        LayoutInflater.from(context)
-    }
 
     override fun submitList(list: List<MovieView>?) {
         movieViews = list?.map { it.copy() } as MutableList<MovieView>
@@ -60,11 +57,17 @@ class MovieAdapter constructor(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             R.layout.item_movie ->
-                MovieHolder(ItemMovieBinding.inflate(layoutInflater, parent, false))
+                MovieHolder(ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)) {
+                    onItemClicked((getItem(it) as ItemMovie).movie)
+                }
             R.layout.layout_load_more ->
-                LoadingViewHolder(LayoutLoadMoreBinding.inflate(layoutInflater, parent, false))
+                LoadingViewHolder(LayoutLoadMoreBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             R.layout.item_banner_layout ->
-                BannerMovieViewHolder(ItemHomeSlideLayoutBinding.inflate(layoutInflater, parent, false))
+                BannerMovieViewHolder(
+                    ItemHomeSlideLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                    myScope,
+                    onItemClicked
+                )
             else -> {
                 throw Exception("")
             }
@@ -96,28 +99,42 @@ class MovieAdapter constructor(
 
 class LoadingViewHolder(val binding: LayoutLoadMoreBinding) : RecyclerView.ViewHolder(binding.root)
 
-class MovieHolder(val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+class MovieHolder(
+    val binding: ItemMovieBinding,
+    private val onItemClicked: (Int) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
+
+    init {
+        binding.root.setOnClickListener { onItemClicked(adapterPosition) }
+    }
+
     fun bindData(data: ItemMovie) {
-        binding.itemMovie = data
-        binding.executePendingBindings()
+        binding.apply {
+            itemMovie = data
+            executePendingBindings()
+        }
     }
 }
 
-class BannerMovieViewHolder(val binding: ItemHomeSlideLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+class BannerMovieViewHolder(
+    val binding: ItemHomeSlideLayoutBinding,
+    private val myScope: CoroutineScope,
+    private val onItemClicked: (Movie) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var bannerMovieAdapter: BannerMovieAdapter
-
-    private val adapterScope = CoroutineScope(Dispatchers.Default)
 
     private var currentBannerMovie = 1
 
     fun onViewRecycled() {
         currentBannerMovie = 1
-        adapterScope.coroutineContext.cancelChildren()
+        myScope.coroutineContext.cancelChildren()
     }
 
     fun bindData(data: BannerMovie) {
-        bannerMovieAdapter = BannerMovieAdapter(data.populars)
+        bannerMovieAdapter = BannerMovieAdapter(data.populars) {
+            onItemClicked(it)
+        }
         binding.viewPager.apply {
             adapter = bannerMovieAdapter
             val recyclerView = this.getChildAt(0) as RecyclerView
@@ -133,13 +150,17 @@ class BannerMovieViewHolder(val binding: ItemHomeSlideLayoutBinding) : RecyclerV
         // and provide a smooth flow for infinite scroll
         onInfinitePageChangeCallback(data.populars.size + 2)
 
-        adapterScope.launch {
-            while (isActive) {
-                delay(TIME_AUTO_SCROLL_BANNER_MOVIE)
-                var currentPosition = binding.viewPager.currentItem
-                if (currentPosition == bannerMovieAdapter.itemCount - 1) currentPosition = -1
-                withContext(Dispatchers.Main) {
-                    binding.viewPager.setCurrentItem(currentPosition + 1, true)
+        myScope.apply {
+            // always cancer job before run
+            coroutineContext.cancelChildren()
+            launch {
+                while (isActive) {
+                    delay(TIME_AUTO_SCROLL_BANNER_MOVIE)
+                    var currentPosition = binding.viewPager.currentItem
+                    if (currentPosition == bannerMovieAdapter.itemCount - 1) currentPosition = -1
+                    withContext(Dispatchers.Main) {
+                        binding.viewPager.setCurrentItem(currentPosition + 1, true)
+                    }
                 }
             }
         }
@@ -156,6 +177,7 @@ class BannerMovieViewHolder(val binding: ItemHomeSlideLayoutBinding) : RecyclerV
                             listSize - 1 -> setCurrentItem(1, false)
                             0 -> setCurrentItem(listSize - 2, false)
                         }
+                        currentBannerMovie = currentItem
                     }
                 }
             })

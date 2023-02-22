@@ -6,7 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.core.model.network.movie.Movie
 import com.example.setting.databinding.ItemBannerLayoutBinding
 
-class BannerMovieAdapter(originalList: List<Movie>) : RecyclerView.Adapter<BannerMovieAdapter.BannerMovieHolder>() {
+class BannerMovieAdapter(
+    originalList: List<Movie>,
+    private val onItemClicked: (Movie) -> Unit
+) :
+    RecyclerView.Adapter<BannerMovieAdapter.BannerMovieHolder>() {
 
     private val newList: List<Movie> =
         listOf(originalList.last()) + originalList + listOf(originalList.first())
@@ -18,23 +22,30 @@ class BannerMovieAdapter(originalList: List<Movie>) : RecyclerView.Adapter<Banne
                 parent,
                 false
             )
-        )
+        ) {
+            onItemClicked(newList[it])
+        }
 
     override fun onBindViewHolder(holder: BannerMovieHolder, position: Int) {
         holder.bindData(newList[position])
     }
 
-    class BannerMovieHolder(val binding: ItemBannerLayoutBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class BannerMovieHolder(
+        val binding: ItemBannerLayoutBinding,
+        private val onItemClicked: (Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
         init {
             binding.root.setOnClickListener {
-
+                onItemClicked(adapterPosition)
             }
         }
 
-        fun bindData(movie: Movie) {
-            binding.movie = movie
-            binding.executePendingBindings()
+        fun bindData(dataMovie: Movie) {
+            binding.apply {
+                movie = dataMovie
+                executePendingBindings()
+            }
         }
     }
 

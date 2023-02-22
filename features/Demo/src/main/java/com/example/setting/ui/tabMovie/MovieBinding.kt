@@ -15,4 +15,3 @@ fun ImageView.loadImageMovie(url: String?) {
         .placeholder(R.color.gray)
         .into(this)
 }
-

@@ -15,4 +15,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(),
         openScreen(R.id.action_splashFragment_to_homeFragment, bundle)
     }
 
+    override fun openMovieScreenToMovieDetail(bundle: Bundle?) {
+        openScreen(R.id.action_homeFragment_to_movieDetailFragment, bundle)
+    }
+
 }

@@ -1,34 +1,49 @@
 package com.example.setting.ui.tabMovie
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.core.base.BaseFragment
 import com.example.core.network.Resource
 import com.example.core.utils.Constants
+import com.example.core.utils.Constants.BundleKey.KEY_MOVIE_ID
 import com.example.core.utils.initLoadMore
-import com.example.core.utils.setLayoutBelowStatusBar
+import com.example.core.utils.setStatusBarHeight
+import com.example.setting.DemoNavigation
 import com.example.setting.R
 import com.example.setting.adapter.BannerMovieViewHolder
 import com.example.setting.adapter.MovieAdapter
 import com.example.setting.databinding.FragmentMovieBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>(R.layout.fragment_movie) {
+
+    @Inject
+    lateinit var demoNavigation: DemoNavigation
 
     private val movieViewModel: MovieViewModel by viewModels()
 
     override fun getVM() = movieViewModel
 
-    private val movieAdapter: MovieAdapter by lazy {
-        MovieAdapter(requireContext())
-    }
+    private lateinit var movieAdapter: MovieAdapter
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        binding.apply {
-            statusBarSpace.setLayoutBelowStatusBar()
+        binding.statusBarSpace.setStatusBarHeight()
+        movieAdapter = MovieAdapter(lifecycleScope) {
+            val bundle = Bundle().apply {
+                putLong(KEY_MOVIE_ID, it.id)
+            }
+            demoNavigation.openMovieScreenToMovieDetail(bundle)
+        }
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.apply {
             recyclerView.apply {
                 itemAnimator = null
                 hasFixedSize()

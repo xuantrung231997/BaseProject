@@ -26,6 +26,14 @@
         android:name="com.example.baseproject.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.example.setting.ui.movie_detail.MovieDetailFragment"
+        android:label="MovieDetailFragment"
+        tools:layout="@layout/fragment_movie_detail" />
 
 </navigation>

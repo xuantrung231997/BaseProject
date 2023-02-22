@@ -144,9 +144,9 @@ fun View.setOnSafeClickListener(duration: Long = DURATION_TIME_CLICKABLE, onClic
 }
 
 /**
- * Set a layout below status bar
+ * For set a layout below status bar
  */
-fun View.setLayoutBelowStatusBar() {
+fun View.setStatusBarHeight() {
     if (this.layoutParams is MarginLayoutParams) {
         val layoutParams = this.layoutParams as MarginLayoutParams
         layoutParams.setMargins(0, getStatusBarHeight(this.context), 0, 0)

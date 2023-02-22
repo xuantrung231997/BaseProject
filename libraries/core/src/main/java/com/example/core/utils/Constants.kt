@@ -25,6 +25,10 @@ object Constants {
         const val MOVIE = 5
     }
 
+    object BundleKey {
+        const val KEY_MOVIE_ID = "KEY_MOVIE_ID"
+    }
+
     object ApiComponents {
         const val BASE_URL = "https://google.com"
         const val URL_MOVIEDB = "https://api.themoviedb.org/3/movie/"

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="com.example.core.model.network.movie.MovieDetailResult" />
+
+        <variable
+            name="viewModel"
+            type="com.example.setting.ui.movie_detail.MovieDetailViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white_background"
+            android:orientation="vertical">
+
+            <Space
+                android:id="@+id/status_bar_space"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <ViewFlipper
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                app:displayChild="@{viewModel.movieDetail}">
+
+                <include layout="@layout/layout_loading_list" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{movie.title}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/coverMovie"
+                        app:layout_constraintTop_toTopOf="@id/coverMovie"
+                        tools:text="The Best Of Me" />
+
+                    <TextView
+                        android:id="@+id/category"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:maxLines="2"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/title"
+                        app:layout_constraintTop_toBottomOf="@id/title"
+                        app:movie_category="@{movie.genres}"
+                        tools:text="Action | Drama | Advanture" />
+
+                    <TextView
+                        android:id="@+id/rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/category"
+                        app:layout_constraintTop_toBottomOf="@id/category"
+                        app:movie_rating="@{movie.voteAverage}"
+                        tools:text="5.0/10" />
+
+                    <TextView
+                        android:id="@+id/language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/rating"
+                        app:layout_constraintTop_toBottomOf="@id/rating"
+                        app:movie_language="@{movie.originalLanguage}"
+                        tools:text="Language: English" />
+
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/language"
+                        app:layout_constraintTop_toBottomOf="@id/language"
+                        app:movie_time="@{movie}"
+                        tools:text="June 22, 2007 (USA) 2h 10m" />
+
+                    <TextView
+                        android:id="@+id/content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="@{movie.overview}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/coverMovie"
+                        app:layout_constraintTop_toBottomOf="@id/coverMovie"
+                        tools:text="Jwasdadw wdqwdqwd qwdqwd qwdqwdq qwd" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/read_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:text="@string/readmore"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/content" />
+
+                    <TextView
+                        android:id="@+id/cast"
+                        style="?attr/textAppearanceHeadline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:text="Cast"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@id/content"
+                        app:layout_constraintTop_toBottomOf="@id/content" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/coverMovie"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintDimensionRatio="3:4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.4"
+                        app:loadImageMovie="@{movie.backdropPath}" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ViewFlipper>
+
+            <ViewFlipper
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:displayChild="@{viewModel.actors}">
+
+                <include layout="@layout/layout_loading_list" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            </ViewFlipper>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
