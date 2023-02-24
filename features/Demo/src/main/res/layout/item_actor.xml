@@ -22,7 +22,6 @@
             android:layout_height="194dp"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:scaleType="fitXY"
             app:loadImageMovie="@{actor.image}" />
 

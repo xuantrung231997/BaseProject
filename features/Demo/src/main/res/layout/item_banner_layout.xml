@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="10dp"
+        android:foreground="?android:attr/selectableItemBackground"
         apps:loadImageMovie="@{movie.posterPath}" />
 </layout>
 

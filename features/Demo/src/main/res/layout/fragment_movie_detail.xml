@@ -132,6 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2sdp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:text="@string/readmore"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
