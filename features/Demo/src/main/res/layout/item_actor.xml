@@ -34,6 +34,8 @@
             android:gravity="center"
             android:maxLines="3"
             android:text="@{actor.name}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
             tools:text="Lorem ipsum" />
     </LinearLayout>
 </layout>

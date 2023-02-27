@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:apps="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -14,7 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="@dimen/_8sdp"
+        android:background="@drawable/background_round_shape"
+        android:elevation="@dimen/_8sdp"
         android:foreground="?android:attr/selectableItemBackground"
-        apps:loadImageMovie="@{movie.posterPath}" />
+        android:padding="0.5dp"
+        app:loadImageMovie="@{movie.posterPath}" />
 </layout>
-

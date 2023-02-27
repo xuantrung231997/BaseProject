@@ -6,6 +6,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="gray">#BEBEBE</color>
+    <color name="yellow">#FFEB3B</color>
     <color name="transparent">#00FFFFFF</color>
 
     <color name="color_button_common_blue">#4356B4</color>
@@ -18,5 +19,4 @@
     <color name="end_color_btn_common">#05E8BA</color>
 
     <color name="color_hint_edit_text">#333333</color>
-
 </resources>

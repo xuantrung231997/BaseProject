@@ -17,7 +17,7 @@ import com.example.setting.model.ItemMovie
 import com.example.setting.model.MovieView
 import kotlinx.coroutines.*
 
-private const val TIME_AUTO_SCROLL_BANNER_MOVIE = 2000L
+private const val TIME_AUTO_SCROLL_BANNER_MOVIE = 2500L
 
 class MovieAdapter constructor(
     private val myScope: CoroutineScope,

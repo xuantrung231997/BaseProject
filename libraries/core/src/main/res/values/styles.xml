@@ -88,4 +88,9 @@
         <!--        <item name="android:windowExitAnimation">@anim/slide_down</item>-->
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">@color/yellow</item>
+    </style>
+
 </resources>
